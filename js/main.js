@@ -76,6 +76,11 @@ elAddForm.addEventListener("submit", (evt) => {
  
 });
 
+const elEditModal = new bootstrap.Modal("#edit-product-modal");
+const elEditForm = document.querySelector("#edit-product-form");
+const elEditTitle = elEditForm.querySelector("#product-title");
+const elEditPrice = elEditForm.querySelector("#product-price");
+const elEditBenefits = elEditForm.querySelector("#product-benefits");
 
 elList.addEventListener("click", (evt) => {
   
@@ -86,10 +91,43 @@ elList.addEventListener("click", (evt) => {
 
     });
     products.splice(clickedBtnIndex, 1);
-
-
-    renderProducts()
-    
+    renderProducts();
   }
-  
+  if(evt.target.matches(".btn-secondary")){
+    const clickedBtnId = +evt.target.dataset.id;
+    const clickedBtnObj = products.find((product) => product.id == clickedBtnId)
+    
+    if(clickedBtnObj){
+      elEditTitle.value = clickedBtnObj.title || ""; 
+      elEditPrice.value = clickedBtnObj.price || ""; 
+      elEditBenefits.value = clickedBtnObj.benefits || "";
+
+    }
+  }
+
+})
+
+
+elEditForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  const submittingItemId = +evt.target.id;
+
+  const titleValue = elEditTitle.value.trim();
+  const priceValue = elEditPrice.value;
+  const benefitsValue = elEditBenefits.value;
+
+  if(titleValue && priceValue > 0 && benefitsValue > 0){
+    const submittingItemIndex = products.findIndex(product => product.id === submittingItemId);
+
+    const submittingItemObj = {
+      id: submittingItemId,
+      title: titleValue,
+      price: priceValue,
+      benefits: benefitsValue
+    }
+    products.splice(submittingItemIndex, 1, submittingItemObj);
+    renderProducts();
+    elEditModal.hide();
+  }
 })
