@@ -117,7 +117,7 @@ elEditForm.addEventListener("submit", (evt) => {
   const priceValue = elEditPrice.value;
   const benefitsValue = elEditBenefits.value;
 
-  if(titleValue && priceValue > 0 && benefitsValue > 0){
+  if(titleValue == "" && priceValue > 0 && benefitsValue > 0){
     const submittingItemIndex = products.findIndex(product => product.id === submittingItemId);
 
     const submittingItemObj = {
