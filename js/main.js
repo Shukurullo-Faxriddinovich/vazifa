@@ -29,18 +29,22 @@ const createProductRow = product => {
   const elDeleteBtn = elProductRow.querySelector(".btn-danger");
   elDeleteBtn.dataset.id =  id;
 
+  const elEditBtn = elProductRow.querySelector(".btn-secondary");
+  elEditBtn.dataset.id = id;
+
   return elProductRow;
 }
 
-const renderStudents = () => {
+const renderProducts = () => {
   elList.innerHTML = "";
+
   products.forEach((product) => {
     const elProductRow = createProductRow(product);
     elList.appendChild(elProductRow);
   });
 }
 
-renderStudents();
+renderProducts();
 
 
 const elAddForm = document.querySelector(".add-form");
@@ -82,9 +86,9 @@ elList.addEventListener("click", (evt) => {
 
     });
     products.splice(clickedBtnIndex, 1);
-    
 
-    renderStudents()
+
+    renderProducts()
     
   }
   
