@@ -78,9 +78,10 @@ elAddForm.addEventListener("submit", (evt) => {
 
 const elEditModal = new bootstrap.Modal("#edit-product-modal");
 const elEditForm = document.querySelector("#edit-product-form");
-const elEditTitle = elEditForm.querySelector("#product-title");
-const elEditPrice = elEditForm.querySelector("#product-price");
-const elEditBenefits = elEditForm.querySelector("#product-benefits");
+const elEditTitle = elEditForm.querySelector("#edit-product-title");
+const elEditPrice = elEditForm.querySelector("#edit-product-price");
+const elEditManufacturer = elEditForm.querySelector("#edit-product-manufacturer")
+const elEditBenefits = elEditForm.querySelector("#edit-product-benefits");
 
 elList.addEventListener("click", (evt) => {
   
@@ -111,23 +112,47 @@ elList.addEventListener("click", (evt) => {
 elEditForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  const submittingItemId = +evt.target.id;
+  const submitItemId = +evt.target.id;
 
   const titleValue = elEditTitle.value.trim();
   const priceValue = elEditPrice.value;
   const benefitsValue = elEditBenefits.value;
 
-  if(titleValue == "" && priceValue > 0 && benefitsValue > 0){
-    const submittingItemIndex = products.findIndex(product => product.id === submittingItemId);
+  if(titleValue == "" && benefitsValue == "" && priceValue > 0){
+    const submitItemIndex = products.findIndex(product => product.id === submitItemId);
 
-    const submittingItemObj = {
-      id: submittingItemId,
+    const submitItemObj = {
+      id: submitItemId,
       title: titleValue,
       price: priceValue,
       benefits: benefitsValue
     }
-    products.splice(submittingItemIndex, 1, submittingItemObj);
+    products.splice(submitItemIndex, 1, submitItemObj);
     renderProducts();
     elEditModal.hide();
   }
-})
+});
+
+
+const elFilterForm = document.querySelector("#filter");
+
+
+elFilterForm.addEventListener("submit", (evt) =>{
+  evt.preventDefault()
+
+  const elements = evt.target.elements;
+  const searchValue = elements.search.value;
+  const priceValue = elements.from.value;
+
+  const filteredProducts = products.filter(function(element) {
+    return element.title.toLowerCase().includes(searchValue.toLowerCase());
+  }).filter(product =>{
+    return product.price >= priceValue;
+  });
+
+  elList.innerHTML = "";
+  filteredProducts.forEach(product => {
+    const elCreatedProduct = createProductRow(product);
+    elList.append(elCreatedProduct);
+  });
+});
