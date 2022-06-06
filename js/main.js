@@ -34,6 +34,7 @@ const createProductRow = product => {
 
   return elProductRow;
 }
+const elCount = document.querySelector(".count-wrapper");
 
 const renderProducts = () => {
   elList.innerHTML = "";
@@ -42,6 +43,7 @@ const renderProducts = () => {
     const elProductRow = createProductRow(product);
     elList.appendChild(elProductRow);
   });
+  elCount.textContent =`Count: ${products.length}`;
 }
 
 renderProducts();
@@ -73,7 +75,7 @@ elAddForm.addEventListener("submit", (evt) => {
     elList.append(elNewProduct)
     elAddForm.reset();
   } 
- 
+  elCount.textContent =`Count: ${products.length}`;
 });
 
 const elEditModal = new bootstrap.Modal("#edit-product-modal");
@@ -106,8 +108,7 @@ elList.addEventListener("click", (evt) => {
       elEditForm.dataset.id = clickedBtnId;
     }
   }
-
-})
+});
 
 
 elEditForm.addEventListener("submit", (evt) => {
