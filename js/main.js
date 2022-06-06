@@ -56,7 +56,7 @@ elAddForm.addEventListener("submit", (evt) => {
 
   const titleInputValue = formElements[0].value;
   const priceValue = +formElements[1].value;
-  const modelValue = formElements.value;
+  const modelValue = formElements[2].value;
   const benefitsValue = +formElements[3].value;
 
   if(titleInputValue !== "" && priceValue > 0 && modelValue !== "" && benefitsValue > 0){
@@ -100,9 +100,10 @@ elList.addEventListener("click", (evt) => {
     
     if(clickedBtnObj){
       elEditTitle.value = clickedBtnObj.title || ""; 
-      elEditPrice.value = clickedBtnObj.price || ""; 
+      elEditPrice.value = clickedBtnObj.price || "";
+      elEditManufacturer.value = clickedBtnObj.model || ""; 
       elEditBenefits.value = clickedBtnObj.benefits || "";
-
+      elEditForm.dataset.id = clickedBtnId;
     }
   }
 
@@ -112,19 +113,21 @@ elList.addEventListener("click", (evt) => {
 elEditForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  const submitItemId = +evt.target.id;
+  const submitItemId = +evt.target.dataset.id;
 
   const titleValue = elEditTitle.value.trim();
   const priceValue = elEditPrice.value;
   const benefitsValue = elEditBenefits.value;
+  const manufacturerValue = elEditManufacturer.value;
 
-  if(titleValue == "" && benefitsValue == "" && priceValue > 0){
+  if(titleValue !== "" && benefitsValue !== "" && manufacturerValue !== "" && priceValue > 0){
     const submitItemIndex = products.findIndex(product => product.id === submitItemId);
 
     const submitItemObj = {
       id: submitItemId,
       title: titleValue,
       price: priceValue,
+      model: manufacturerValue,
       benefits: benefitsValue
     }
     products.splice(submitItemIndex, 1, submitItemObj);
@@ -143,7 +146,7 @@ elFilterForm.addEventListener("submit", (evt) =>{
   const elements = evt.target.elements;
   const searchValue = elements.search.value;
   const priceValue = elements.from.value;
-  const priceToValue = elements.to.value;
+  const priceToValue = +elements.to.value;
   const sortValue = elements.sortby.value;
 
   const filteredProducts = products.filter(function(element) {
@@ -151,7 +154,7 @@ elFilterForm.addEventListener("submit", (evt) =>{
   }).filter(product =>{
     return product.price >= priceValue;
   }).filter(product =>{
-    return product.price <= priceToValue; 
+    return priceToValue >= priceValue ? product.price <= priceToValue : true;
   }).sort((a, b) => {
     if(sortValue == "1"){
       if(a.title > b.title){

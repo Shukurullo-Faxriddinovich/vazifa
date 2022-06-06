@@ -12,7 +12,7 @@ const products = [
     id: 124,
     title: "Samsung Note 20 Ultra",
     img: "https://picsum.photos/300/200",
-    price: 8300000,
+    price: 5000000,
     model: "Samsung",
     addedDate: new Date("2021-10-12").toISOString(),
     benefits: ["32gb", "1tb"]
