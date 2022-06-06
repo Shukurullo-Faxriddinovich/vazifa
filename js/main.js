@@ -143,11 +143,30 @@ elFilterForm.addEventListener("submit", (evt) =>{
   const elements = evt.target.elements;
   const searchValue = elements.search.value;
   const priceValue = elements.from.value;
+  const priceToValue = elements.to.value;
+  const sortValue = elements.sortby.value;
 
   const filteredProducts = products.filter(function(element) {
     return element.title.toLowerCase().includes(searchValue.toLowerCase());
   }).filter(product =>{
     return product.price >= priceValue;
+  }).filter(product =>{
+    return product.price <= priceToValue; 
+  }).sort((a, b) => {
+    if(sortValue == "1"){
+      if(a.title > b.title){
+        return 1;
+      }else if(a.title == b.title){
+        return 0;
+      }
+      return -1;
+    }
+    else if(sortValue == "2"){
+      return b.price - a.price;
+    }
+    else if(sortValue == "3"){
+      return a.price - b.price;
+    }
   });
 
   elList.innerHTML = "";

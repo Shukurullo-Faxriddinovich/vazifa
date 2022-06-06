@@ -10,7 +10,7 @@ const products = [
   },
   {
     id: 124,
-    title: "Samgung Note 20 Ultra",
+    title: "Samsung Note 20 Ultra",
     img: "https://picsum.photos/300/200",
     price: 8300000,
     model: "Samsung",
