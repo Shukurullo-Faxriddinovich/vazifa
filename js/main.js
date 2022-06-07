@@ -50,7 +50,8 @@ renderProducts();
 
 
 const elAddForm = document.querySelector(".add-form");
-const elSelect = document.querySelector(".form-select")
+const elSelect = document.querySelector(".form-select");
+const elAddModal = new bootstrap.Modal("#add-product-modal");
 elAddForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
@@ -74,6 +75,7 @@ elAddForm.addEventListener("submit", (evt) => {
     const elNewProduct = createProductRow(addingProduct);
     elList.append(elNewProduct)
     elAddForm.reset();
+    elAddModal.hide();
   } 
   elCount.textContent =`Count: ${products.length}`;
 });
