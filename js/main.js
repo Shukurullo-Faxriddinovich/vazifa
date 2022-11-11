@@ -158,23 +158,22 @@ elFilterForm.addEventListener("submit", (evt) =>{
     return product.price >= priceValue;
   }).filter(product =>{
     return priceToValue >= priceValue ? product.price <= priceToValue : true;
-  })
-  // .sort((a, b) => {
-  //   if(sortValue == "1"){
-  //     if(a.title > b.title){
-  //       return 1;
-  //     }else if(a.title == b.title){
-  //       return 0;
-  //     }
-  //     return -1;
-  //   }
-  //   else if(sortValue == "2"){
-  //     return b.price - a.price;
-  //   }
-  //   else if(sortValue == "3"){
-  //     return a.price - b.price;
-  //   }
-  // });
+  }).sort((a, b) => {
+    if(sortValue == "1"){
+      if(a.title > b.title){
+        return 1;
+      }else if(a.title == b.title){
+        return 0;
+      }
+      return -1;
+    }
+    else if(sortValue == "2"){
+      return b.price - a.price;
+    }
+    else if(sortValue == "3"){
+      return a.price - b.price;
+    }
+  });
 
   elList.innerHTML = "";
   filteredProducts.forEach(product => {
